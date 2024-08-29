@@ -14,13 +14,21 @@ export const create = async (req: Request<{}, {}, Icidade>, res: Response) => {
   let validateData: Icidade | undefined = undefined
 
   try {
-    validateData = await bodyValidation.validate(req.body)
+    validateData = await bodyValidation.validate(req.body, {
+      abortEarly: false, // esse método serve para validar todos os campos
+    })
   } catch (err) {
     const yupError = err as yup.ValidationError
-    return res.json({
-      erros: {
-        default: yupError.message,
-      },
+    const Erros: Record<string, string> = {}
+
+    yupError.inner.forEach((error) => {
+      if (!error.path) return
+
+      Erros[error.path] = error.message
+    })
+
+    return res.status(400).json({
+      Erros
     })
   }
 
