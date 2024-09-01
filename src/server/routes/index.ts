@@ -1,6 +1,6 @@
 import { Router } from "express"
 import { cidadesController } from "../controllers"
-import { createQueryValidator } from "../controllers/cidades/Create"
+import {  } from "../controllers/cidades/Create"
 
 const router = Router()
 
@@ -13,8 +13,7 @@ router.get("/", (req, res) => {
 
 router.post(
   "/cidades",
-  cidadesController.createBodyValidator,
-  cidadesController.createQueryValidator,
+  cidadesController.createValidation,
   cidadesController.create
 )
 
