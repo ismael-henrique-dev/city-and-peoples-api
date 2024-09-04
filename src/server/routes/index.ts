@@ -17,4 +17,10 @@ router.post(
   cidadesController.create
 )
 
+router.get(
+  "/cidades",
+  cidadesController.geatAllValidation,
+  cidadesController.getAll
+)
+
 export { router }
